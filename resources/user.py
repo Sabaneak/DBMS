@@ -15,8 +15,7 @@ class Prisoner_Login(Resource):
             return {'msg': 'No such prisoner exists. Recheck credentials'}, 400
         else:
             access_token = create_access_token(identity=str(body['pid']), fresh=True)
-
-        return {'access_token': access_token}, 200
+            return {'access_token': access_token}, 200
 
 class Official_Login(Resource):
     def post(self):
@@ -29,8 +28,7 @@ class Official_Login(Resource):
             return {'msg': 'No such official exists. Recheck credentials'}, 400
         else:
             access_token = create_access_token(identity=str(body['empid']), fresh=True)
-
-        return {'access_token': access_token}, 200
+            return {'access_token': access_token}, 200
 
 class Business_Login(Resource):
     def post(self):
@@ -43,8 +41,7 @@ class Business_Login(Resource):
             return {'msg': 'No such business exists. Recheck credentials'}, 400
         else:
             access_token = create_access_token(identity=str(body['bid']), fresh=True)
-
-        return {'access_token': access_token}, 200
+            return {'access_token': access_token}, 200
 
 class Relative_Login(Resource):
     def post(self):
@@ -57,8 +54,7 @@ class Relative_Login(Resource):
             return {'msg': 'No such relative exists. Recheck credentials'}, 400
         else:
             access_token = create_access_token(identity=str(body['rid']), fresh=True)
-
-        return {'access_token': access_token}, 200
+            return {'access_token': access_token}, 200
 
 class User_Logout(Resource):
     @jwt_required()
