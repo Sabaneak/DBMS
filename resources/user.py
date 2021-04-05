@@ -20,8 +20,8 @@ class Prisoner_Login(Resource):
 class Official_Login(Resource):
     def post(self):
         body = request.get_json()
-        sql = "SELECT * FROM official where empid=%s and password=%s"
-        tuple = (body['empid'], body['password'])
+        sql = "SELECT * FROM official where empid=%s and password=%s and type=%s"
+        tuple = (body['empid'], body['password'], body['type'])
         res = execute_sql_tuple(sql=sql, tuple=tuple)
 
         if res == "[]":
