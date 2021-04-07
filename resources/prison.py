@@ -20,7 +20,7 @@ class Prison(Resource):
     def post(self, pno):
         body = request.get_json()
         sql = "INSERT INTO prison (pno, capacity, district, city) VALUES (%s, %s, %s, %s)"
-        tuple = (body['pno'], body['capacity'], body['district'], body['city'])
+        tuple = (pno, body['capacity'], body['district'], body['city'])
 
         try:
             res = execute_sql_tuple(sql=sql, tuple=tuple)

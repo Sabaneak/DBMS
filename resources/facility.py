@@ -31,7 +31,7 @@ class Facility(Resource):
     def delete(self, pno):
         body = request.get_json()
         sql = "DELETE FROM prison_facilities WHERE prison_no = %s AND facility_name = %s"
-        tuple = (_id, body['facility_name'])
+        tuple = (pno, body['facility_name'])
 
         try:
             res = execute_sql_tuple(sql=sql, tuple=tuple)

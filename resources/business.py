@@ -6,9 +6,9 @@ from .helper import execute_sql, execute_sql_tuple
 
 class Business(Resource):
     @jwt_required()
-    def get(self, bid):
+    def get(self, bus_id):
         sql = "SELECT bid, bname, role, role_desc, sal, number_required FROM business where bid=bus_id and bus_id=%s"
-        tuple = (bid)
+        tuple = (bus_id)
         res = execute_sql_tuple(sql=sql, tuple=tuple)
 
         if res == "[]":
@@ -17,10 +17,10 @@ class Business(Resource):
             return {'Business {}'.format(bid): res}, 200
 
     @jwt_required()
-    def post(self, bid):
+    def post(self, bus_id):
         body = request.get_json()
         sql = "INSERT INTO business (bid, password, bname, role, role_desc, sal, number_required) VALUES (%s, %s, %s, %s, %s, %s, %s)"
-        tuple = (body['bid'], body['password'], body['bname'], body['role'], body['role_desc'], body['sal'],
+        tuple = (bus_id, body['password'], body['bname'], body['role'], body['role_desc'], body['sal'],
                  body['number_required'])
 
         try:
@@ -31,7 +31,7 @@ class Business(Resource):
             return {'msg': str(e)}, 400
 
     @jwt_required()
-    def delete(self, bid):
+    def delete(self, bus_id):
         sql = "DELETE FROM business WHERE bid = %s"
         tuple = (bid)
 

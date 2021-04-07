@@ -43,7 +43,7 @@ api.add_resource(Facility, '/facility/<int:pno>')
 api.add_resource(Relative, '/relative/<int:pid>')
 api.add_resource(Visit, '/visit')
 api.add_resource(Prison, '/prison/<int:pno>')
-api.add_resource(Business, '/business/<int:bid>')
+api.add_resource(Business, '/business/<int:bus_id>')
 
 if __name__ == '__main__':
     app.run(debug=True)
