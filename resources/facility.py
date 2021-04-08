@@ -13,7 +13,7 @@ class Facility(Resource):
         if res == "[]":
             return {'msg': 'Prison does not exist'}, 400
         else:
-            return {'Prison {}'.format(_id): res}, 200
+            return {'Prison {}'.format(pno): res}, 200
 
     @jwt_required()
     def post(self, pno):
