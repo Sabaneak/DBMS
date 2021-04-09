@@ -19,6 +19,9 @@ from resources.relative import Relative
 from resources.visit import Visit
 from resources.business import Business
 from resources.prison import Prison
+from resources.prisoner import Prisoner, Prisoners
+from resources.crime import Crime
+from resources.official import Official
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 
@@ -51,7 +54,11 @@ api.add_resource(Relative, '/relative/<int:pid>')
 api.add_resource(Visit, '/visit')
 
 api.add_resource(Prison, '/prison/<int:pno>')
-api.add_resource(Business, '/business/<int:bid>')
+api.add_resource(Business, '/business/<int:bus_id>')
+api.add_resource(Prisoner, '/prisoner/<int:pid>')
+api.add_resource(Prisoners, '/prisoners/all')
+api.add_resource(Crime, 'crime/<int:cid>')
+api.add_resource(Official, '/official/<int:empid>')
 
 if __name__ == '__main__':
     app.run(debug=True)

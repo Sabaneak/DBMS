@@ -24,7 +24,7 @@ class Prison(Resource):
 
         try:
             res = execute_sql_tuple(sql=sql, tuple=tuple)
-            return {'msg': 'Prisoner added'}, 200
+            return {'msg': 'Prison added'}, 200
         except Exception as e:
             return {'msg': str(e)}, 400
 
@@ -35,6 +35,6 @@ class Prison(Resource):
 
         try:
             res = execute_sql_tuple(sql=sql, tuple=tuple)
-            return {'msg': 'Prisoner deleted'}, 200
+            return {'msg': 'Prison deleted'}, 200
         except Exception as e:
             return {'msg': str(e)}, 400

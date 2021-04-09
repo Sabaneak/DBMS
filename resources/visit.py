@@ -7,7 +7,7 @@ class Visit(Resource):
     @jwt_required()
     def post(self):
         body = request.get_json()
-        sql = "INSERT INTO visit (vid, rid, appointment_date) VALUES (%s %s %s)"
+        sql = "INSERT INTO visit (vid, rid, appointment_date) VALUES (%s, %s, %s)"
         tuple = (body['vid'], body['rid'], body['appointment_date'])
 
         try:
