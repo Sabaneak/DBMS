@@ -6,7 +6,7 @@ from .helper import execute_sql, execute_sql_tuple
 class PrisonerReport(Resource):
     @jwt_required()
     def get(self, pid):
-        sql = "SELECT p.pid, p.prison_no, p.first_name, p.last_name, p.age, c.c_name, sum(c.c_years), p.ht_in_m, p.wt_in_kg, p.eye_colour, p.hair_colour, p.fingerprint, pi.identifying_mark, pa.p_2, p.entry_date, p.visits_made, p.employed_by, pc.chore_name, ch.chore_time, r.first_name, r.last_name, r.relation FROM prisoner p LEFT JOIN prisoner_id_marks pi ON pi.pid = p.pid LEFT JOIN prisoner_affiliations pa ON pa.p_1 = p.pid LEFT JOIN prisoner_chores pc ON pc.pid = p.pid LEFT JOIN chore ch ON ch.chore_name = pc.chore_name LEFT JOIN relative r ON r.pid = p.pid LEFT JOIN crime_records cr ON p.pid = cr.pid LEFT JOIN crime c ON cr.cid = c.cid WHERE p.pid = %s"
+        sql = "SELECT * FROM prisonerd LEFT JOIN prisonerd1 USING (pid) LEFT JOIN prisonerd2 USING (pid) LEFT JOIN prisonerd3 USING (pid) LEFT JOIN prisonerd4 USING (pid) LEFT JOIN prisonerd5 USING (pid) LEFT JOIN prisonerd6 USING (pid) WHERE pid = %s"
         tuple = (pid)
         res = execute_sql_tuple(sql=sql, tuple=tuple)
 
@@ -18,7 +18,7 @@ class PrisonerReport(Resource):
 class GuardReport(Resource):
     @jwt_required()
     def get(self, _id):
-        sql = "SELECT s.empid, prison_no, first_name, last_name, salary, years_of_experience, mgr, shift_number FROM official o, guard_shifts s WHERE o.empid = %s AND o.empid = s.empid AND type = 'Guard'"
+        sql = "SELECT o.empid, o.prison_no, district, city, o.first_name, o.last_name, o.salary, o.years_of_experience, o.mgr, o1.first_name as mgr_first_name, o1.last_name as mgr_last_name, shift_number FROM official o LEFT JOIN prison pr on o.prison_no = pr.pno LEFT JOIN official o1 on o1.empid = o.mgr LEFT JOIN guard_shifts s on o.empid = s.empid WHERE o.empid = %s AND o.type = 'Guard'"
         tuple = (_id)
         res = execute_sql_tuple(sql=sql, tuple=tuple)
 
