@@ -4,7 +4,7 @@ from flask_jwt_extended import jwt_required
 from .helper import execute_sql, execute_sql_tuple
 
 
-class Prisoner(Resource):
+class Official(Resource):
     @jwt_required()
     def post(self, empid):
         body = request.get_json()

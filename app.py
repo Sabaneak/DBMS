@@ -57,7 +57,7 @@ api.add_resource(Prison, '/prison/<int:pno>')
 api.add_resource(Business, '/business/<int:bus_id>')
 api.add_resource(Prisoner, '/prisoner/<int:pid>')
 api.add_resource(Prisoners, '/prisoners/all')
-api.add_resource(Crime, 'crime/<int:cid>')
+api.add_resource(Crime, '/crime/<int:cid>')
 api.add_resource(Official, '/official/<int:empid>')
 
 if __name__ == '__main__':

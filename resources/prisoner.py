@@ -52,3 +52,4 @@ class Prisoners(Resource):
             return {'msg': 'No prisoners'}, 400
         else:
             return {'Prisoners': res}, 200
+

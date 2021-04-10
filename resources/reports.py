@@ -118,12 +118,11 @@ class VisitSheet(Resource):
 class PrisonerPrison(Resource):
     @jwt_required()
     def get(self, prison_no):
-        sql = "SELECT p.pid, p.first_name, p.last_name, c.c_name FROM prisoner p, crime c, crime_records cr WHERE p.pid = cr.pid AND cr.cid = c.cid AND p.prison_no = %s"
+        sql = "SELECT p.pid, p.first_name, p.last_name FROM prisoner p WHERE p.prison_no = %s"
         tuple = (prison_no)
         res = execute_sql_tuple(sql=sql, tuple=tuple)
-
         if res == "[]":
             return {'msg': 'Prisoner not found'}, 400
         else:
-            return {'Prisoner {}'.format(prison_no): res}, 200
+            return {'Prison {}'.format(prison_no): res}, 200
 
