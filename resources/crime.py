@@ -28,3 +28,16 @@ class Crime(Resource):
         except Exception as e:
             return {'msg': str(e)}, 400
 
+class Crime_Records(Resource):
+    @jwt_required()
+    def post(self, pid):
+        body = request.get_json()
+        sql = "INSERT INTO crime_records (pid, cid) VALUES (%s, %s)"
+        tuple = (pid, body['cid'])
+
+        try:
+            res = execute_sql_tuple(sql=sql, tuple=tuple)
+            return {'msg': 'Crime added'}, 200
+        except Exception as e:
+            return {'msg': str(e)}, 400
+

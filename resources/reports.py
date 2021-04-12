@@ -121,8 +121,20 @@ class PrisonerPrison(Resource):
         sql = "SELECT p.pid, p.first_name, p.last_name FROM prisoner p WHERE p.prison_no = %s"
         tuple = (prison_no)
         res = execute_sql_tuple(sql=sql, tuple=tuple)
+
         if res == "[]":
             return {'msg': 'Prisoner not found'}, 400
         else:
             return {'Prison {}'.format(prison_no): res}, 200
 
+class GuardWarden(Resource):
+    @jwt_required()
+    def get(self, empid):
+        sql = "SELECT o.empid, o.first_name, o.last_name FROM official o WHERE o.mgr = %s"
+        tuple = (empid)
+        res = execute_sql_tuple(sql=sql, tuple=tuple)
+
+        if res == "[]":
+            return {'msg': 'Guard not found'}, 400
+        else:
+            return {'Warden {}'.format(empid): res}, 200

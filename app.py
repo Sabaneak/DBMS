@@ -9,7 +9,7 @@ import pymysql
 from resources.user import Prisoner_Login, Official_Login, Business_Login, Relative_Login, User_Logout
 from resources.reports import (
     PrisonerReport, GuardReport, WardenReport, PrisonReport, ChoreSheet, ChiefWardenReport,
-    RelativeSheet, BusinessSheet, VisitSheet, PrisonerPrison
+    RelativeSheet, BusinessSheet, VisitSheet, PrisonerPrison, GuardWarden
 )
 
 from resources.chore import Chore
@@ -19,8 +19,8 @@ from resources.relative import Relative
 from resources.visit import Visit
 from resources.business import Business
 from resources.prison import Prison
-from resources.prisoner import Prisoner, Prisoners
-from resources.crime import Crime
+from resources.prisoner import Prisoner, Prisoners, Prisoner_ID, Prisoner_Affiliations
+from resources.crime import Crime, Crime_Records
 from resources.official import Official
 
 basedir = os.path.abspath(os.path.dirname(__file__))
@@ -46,6 +46,7 @@ api.add_resource(RelativeSheet, '/relative_sheet/<int:rid>')
 api.add_resource(BusinessSheet, '/business_sheet/<int:bid>')
 api.add_resource(VisitSheet, '/visit_sheet/<int:prison_no>')
 api.add_resource(PrisonerPrison, '/prisoner_prison/<int:prison_no>')
+api.add_resource(GuardWarden, '/guard_warden/<int:empid>')
 
 api.add_resource(Chore, '/chore')
 api.add_resource(ShiftAssignment, '/shift/<int:_id>')
@@ -55,10 +56,16 @@ api.add_resource(Visit, '/visit')
 
 api.add_resource(Prison, '/prison/<int:pno>')
 api.add_resource(Business, '/business/<int:bus_id>')
+api.add_resource(Official, '/official/<int:empid>')
+
 api.add_resource(Prisoner, '/prisoner/<int:pid>')
 api.add_resource(Prisoners, '/prisoners/all')
+api.add_resource(Prisoner_ID, '/prisoner_id/<int:pid>')
+api.add_resource(Prisoner_Affiliations, '/prisoner_affiliations/<int:pid>')
+
 api.add_resource(Crime, '/crime/<int:cid>')
-api.add_resource(Official, '/official/<int:empid>')
+api.add_resource(Crime_Records, '/crime_records/<int:pid>')
+
 
 if __name__ == '__main__':
     app.run(debug=True)
