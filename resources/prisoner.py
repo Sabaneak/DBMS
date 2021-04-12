@@ -63,7 +63,7 @@ class Prisoner_ID(Resource):
     def post(self, pid):
         body = request.get_json()
         sql = "INSERT INTO prisoner_id_marks (pid, identifying_mark) VALUES (%s, %s)"
-        tuple = (pid, body['identifying_mark'])
+        tuple = (pid, [body['identifying_mark'][i] for i in range(len(body['identifying_mark']))])
 
         try:
             res = execute_sql_tuple(sql=sql, tuple=tuple)
