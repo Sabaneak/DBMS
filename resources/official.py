@@ -8,7 +8,7 @@ class Official(Resource):
     @jwt_required()
     def post(self, empid):
         body = request.get_json()
-        sql = "INSERT INTO official (empid, password, first_name, last_name, salary, years_of_experience, type, mgr, prison_no)"
+        sql = "INSERT INTO official VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s)"
         tuple = (empid, body['password'], body['first_name'], body['last_name'], body['salary'], body['years_of_experience'],
                  body['type'], body['mgr'], body['prison_no'])
 

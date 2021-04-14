@@ -54,7 +54,7 @@ class PrisonReport(Resource):
 class ChoreSheet(Resource):
     @jwt_required()
     def get(self, pno):
-        sql = "SELECT pr.pno, pr.capacity, pr.district, pr.city, pf.facility_name, SUM(pf.count*pf.cost_per_unit_monthly) AS maintenance_cost, (SELECT SUM(salary) FROM official o WHERE o.prison_no = pr.pno) AS employee_salaries, (SELECT COUNT(*) FROM official o WHERE o.prison_no = pr.pno) AS workforce FROM prison pr, prison_facilities pf WHERE pf.prison_no = pr.pno GROUP BY pr.pno HAVING pr.pno = %s"
+        sql = "SELECT c.pid, c.chore_name, c1.chore_time FROM prisoner_chores c, chore c1 WHERE c.prison_no = c1.prison_no AND c.chore_name = c1.chore_name AND prison_no = %s"
         tuple = (pno)
         res = execute_sql_tuple(sql=sql, tuple=tuple)
 
@@ -66,10 +66,9 @@ class ChoreSheet(Resource):
 class ChiefWardenReport(Resource):
     @jwt_required()
     def get(self, _id):
-        sql = "SELECT e1.empid, e1.prison_no, e1.first_name, e1.last_name, e1.salary, e1.years_of_experience, (SELECT count(*) FROM official e2 WHERE e2.mgr = e1.empid) AS employees FROM official e1 WHERE e1.type = 'Chief Warden' AND e1.empid = %s"
+        sql = "SELECT o.empid, o.prison_no, district, city, o.first_name, o.last_name, o.salary, o.years_of_experience, o.mgr, o1.first_name as mgr_first_name, o1.last_name as mgr_last_name, count(o2.empid) as employees FROM official o LEFT JOIN prison pr on o.prison_no = pr.pno LEFT JOIN official o1 on o1.empid = o.mgr LEFT JOIN official o2 on o2.mgr = o.empid WHERE o.type = 'Chief Warden' AND o.empid = %s"
         tuple = (_id)
         res = execute_sql_tuple(sql=sql, tuple=tuple)
-
         if res == "[]":
             return {'msg': 'Chief Warden does not exist'}, 400
         else:
@@ -138,3 +137,15 @@ class GuardWarden(Resource):
             return {'msg': 'Guard not found'}, 400
         else:
             return {'Warden {}'.format(empid): res}, 200
+
+class GuardChiefWarden(Resource):
+    @jwt_required()
+    def get(self, pno):
+        sql = "SELECT o.empid, o.first_name, o.last_name FROM official o WHERE o.prison_no = %s AND o.type='Guard'"
+        tuple = (pno)
+        res = execute_sql_tuple(sql=sql, tuple=tuple)
+
+        if res == "[]":
+            return {'msg': 'Guard not found'}, 400
+        else:
+            return {'Prison {}'.format(pno): res}, 200
