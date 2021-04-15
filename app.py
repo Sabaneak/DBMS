@@ -9,7 +9,7 @@ import pymysql
 from resources.user import Prisoner_Login, Official_Login, Business_Login, Relative_Login, User_Logout
 from resources.reports import (
     PrisonerReport, GuardReport, WardenReport, PrisonReport, ChoreSheet, ChiefWardenReport,
-    RelativeSheet, BusinessSheet, VisitSheet, PrisonerPrison, GuardWarden, GuardChiefWarden
+    RelativeSheet, BusinessSheet, VisitSheet, PrisonerPrison, GuardWarden, GuardChiefWarden, WardenChiefWarden
 )
 
 from resources.chore import Chore
@@ -48,6 +48,7 @@ api.add_resource(VisitSheet, '/visit_sheet/<int:prison_no>')
 api.add_resource(PrisonerPrison, '/prisoner_prison/<int:prison_no>')
 api.add_resource(GuardWarden, '/guard_warden/<int:empid>')
 api.add_resource(GuardChiefWarden, '/guard_chief_warden/<int:pno>')
+api.add_resource(WardenChiefWarden, '/warden_chief_warden/<int:empid>')
 
 api.add_resource(Chore, '/chore')
 api.add_resource(ShiftAssignment, '/shift/<int:_id>')

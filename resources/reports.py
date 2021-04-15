@@ -149,3 +149,15 @@ class GuardChiefWarden(Resource):
             return {'msg': 'Guard not found'}, 400
         else:
             return {'Prison {}'.format(pno): res}, 200
+
+class WardenChiefWarden(Resource):
+    @jwt_required()
+    def get(self, empid):
+        sql = "SELECT o1.empid, o.prison_no, p.district, p.city FROM official o, official o1, prison p WHERE o1.mgr = o.empid AND o.prison_no = p.pno AND o1.type = 'Warden' AND o.empid = %s"
+        tuple = (empid)
+        res = execute_sql_tuple(sql=sql, tuple=tuple)
+
+        if res == "[]":
+            return {'msg': 'Wardens not found'}, 400
+        else:
+            return {'Chief Warden {}'.format(empid): res}, 200
