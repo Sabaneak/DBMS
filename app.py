@@ -19,7 +19,7 @@ from resources.relative import Relative
 from resources.visit import Visit
 from resources.business import Business
 from resources.prison import Prison
-from resources.prisoner import Prisoner, Prisoners, Prisoner_ID, Prisoner_Affiliations
+from resources.prisoner import Prisoner, Prisoners, Prisoner_ID, Prisoner_Affiliations, AddPrisonerComponents
 from resources.crime import Crime, Crime_Records
 from resources.official import Official
 
@@ -64,6 +64,7 @@ api.add_resource(Prisoner, '/prisoner/<int:pid>')
 api.add_resource(Prisoners, '/prisoners/all')
 api.add_resource(Prisoner_ID, '/prisoner_id/<int:pid>')
 api.add_resource(Prisoner_Affiliations, '/prisoner_affiliations/<int:pid>')
+api.add_resource(AddPrisonerComponents, '/prisoner_form_details/<int:pno>')
 
 api.add_resource(Crime, '/crime/<int:cid>')
 api.add_resource(Crime_Records, '/crime_records/<int:pid>')

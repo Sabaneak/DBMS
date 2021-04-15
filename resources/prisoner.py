@@ -84,3 +84,15 @@ class Prisoner_Affiliations(Resource):
             return {'msg': 'Prisoner {}'.format(pid)}, 200
         except Exception as e:
             return {'msg': str(e)}, 400
+
+class AddPrisonerComponents(Resource):
+    @jwt_required()
+    def get(self, pno):
+        body = request.get_json()
+        sql = "SELECT cr.cid, cr.c_name, pr.pid FROM crime cr JOIN prisoner pr LEFT JOIN prison p ON pr.prison_no = p.pno WHERE p.pno = %s"
+        tuple = (pno)
+        try:
+            res = execute_sql_tuple(sql=sql, tuple=tuple)
+            return {'Prison {}'.format(pno): res}, 200
+        except Exception as e:
+            return {'msg': str(e)}, 400
