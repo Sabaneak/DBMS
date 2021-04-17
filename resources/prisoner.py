@@ -8,17 +8,36 @@ class Prisoner(Resource):
     @jwt_required()
     def post(self, pid):
         body = request.get_json()
-        sql = "INSERT INTO prisoner (pid, password, first_name, last_name, age, ht_in_m, wt_in_kg, eye_colour, " \
-              "hair_colour, fingerprint, visits_made, prison_no, employed_by, entry_date) VALUES (%s %s %s %s %s %s %s %s %s %s %s %s %s %s)"
-        tuple = (
-        pid, body['password'], body['first_name'], body['last_name'], body['age'], body['ht_in_m'], body['wt_in_kg'],
-        body['eye_colour'],
-        body['hair_colour'], body['fingerprint'], body['visits_made'], body['prison_no'], body['employed_by'],
-        body['entry_date'])
 
         try:
-            res = execute_sql_tuple(sql=sql, tuple=tuple)
+            #Prisoner table
+            sql_1 = "INSERT INTO prisoner (pid, password, first_name, last_name, age, ht_in_m, wt_in_kg, eye_colour, " \
+                  "hair_colour, fingerprint, visits_made, prison_no, employed_by, entry_date) VALUES (%s %s %s %s %s %s %s %s %s %s %s %s %s %s)"
+            tuple_1 = (
+            pid, body['password'], body['first_name'], body['last_name'], body['age'], body['ht_in_m'], body['wt_in_kg'], body['eye_colour'],
+            body['hair_colour'], body['fingerprint'], body['visits_made'], body['prison_no'], body['employed_by'], body['entry_date'])
+            res_1 = execute_sql_tuple(sql=sql_1, tuple=tuple_1)
+
+            #Prisoner_Crimes
+            sql_2 = "INSERT INTO crime_records (pid, cid) VALUES (%s, %s)"
+            for i in range(len(body['cid'])):
+                tuple_2 = (pid, body['cid'][i])
+                res_2 = execute_sql_tuple(sql=sql_2, tuple=tuple_2)
+
+            #Prisoner_Affiliations
+            sql_3 = "INSERT INTO prisoner_affiliations (p_1, p_2) VALUES (%s, %s)"
+            for i in range(len(body['pid'])):
+                tuple_3 = (pid, body['pid'][i])
+                res_3 = execute_sql_tuple(sql=sql_3,tuple=tuple_3)
+
+            #Prisoner_ID
+            sql_4 = "INSERT INTO prisoner_id_marks (pid, identifying_mark) VALUES (%s, %s)"
+            for i in range(len(body['identifying_mark'])):
+                tuple_4 = (pid, body['identifying_mark'][i])
+                res_4 = execute_sql_tuple(sql=sql_4, tuple=tuple_4)
+
             return {'msg': 'Prisoner added'}, 200
+
         except Exception as e:
             return {'msg': str(e)}, 400
 
@@ -57,33 +76,6 @@ class Prisoners(Resource):
         else:
             return {'Prisoners': res}, 200
 
-
-class Prisoner_ID(Resource):
-    @jwt_required()
-    def post(self, pid):
-        body = request.get_json()
-        sql = "INSERT INTO prisoner_id_marks (pid, identifying_mark) VALUES (%s, %s)"
-        tuple = (pid, [body['identifying_mark'][i] for i in range(len(body['identifying_mark']))])
-
-        try:
-            res = execute_sql_tuple(sql=sql, tuple=tuple)
-            return {'msg': 'Prisoner {}'.format(pid)}, 200
-        except Exception as e:
-            return {'msg': str(e)}, 400
-
-
-class Prisoner_Affiliations(Resource):
-    @jwt_required()
-    def post(self, pid):
-        body = request.get_json()
-        sql = "INSERT INTO prisoner_affiliations (p_1, p_2) VALUES (%s, %s)"
-        tuple = (pid, body['p_2'])
-
-        try:
-            res = execute_sql_tuple(sql=sql, tuple=tuple)
-            return {'msg': 'Prisoner {}'.format(pid)}, 200
-        except Exception as e:
-            return {'msg': str(e)}, 400
 
 class AddPrisonerComponents(Resource):
     @jwt_required()
