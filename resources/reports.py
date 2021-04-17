@@ -126,6 +126,18 @@ class PrisonerPrison(Resource):
         else:
             return {'Prison {}'.format(prison_no): res}, 200
 
+class PrisonerBusiness(Resource):
+    @jwt_required()
+    def get(self, bid):
+        sql = "SELECT p.pid, p.first_name, p.last_name FROM prisoner p WHERE p.employed_by = %s"
+        tuple = (bid)
+        res = execute_sql_tuple(sql=sql, tuple=tuple)
+
+        if res == "[]":
+            return {'msg': 'Prisoner not found'}, 400
+        else:
+            return {'Business {}'.format(bid): res}, 200
+
 class GuardWarden(Resource):
     @jwt_required()
     def get(self, empid):
@@ -161,3 +173,30 @@ class WardenChiefWarden(Resource):
             return {'msg': 'Wardens not found'}, 400
         else:
             return {'Chief Warden {}'.format(empid): res}, 200
+
+class BusinessRequirement(Resource):
+    @jwt_required()
+    def get(self,bid):
+        sql="select B.bid,B.bname,B.number_required,count(*) as currently_employed from business B,prisoner P where P.employed_by=B.bid group by B.bid,B.bname,B.number_required AND B.bid=%s"
+        tuple = (bid)
+        res = execute_sql_tuple(sql=sql, tuple=tuple)
+        
+        if res == "[]":
+            return {'msg': 'Wardens not found'}, 400
+        else:
+            return {'Business Requirments {}'.format(bid): res}, 200
+
+class UpdateRequirement(Resource):
+    @jwt_required()
+    def put(self,bid):
+        body = request.get_json()
+        sql="UPDATE BUSINESS SET number_required= %s where bid=%s"
+        tuple=(body['new_requirement'],bid)
+        try:
+            res = execute_sql_tuple(sql=sql, tuple=tuple)
+            return {'msg': 'Business Requirement updated'}, 200
+        except Exception as e:
+            return {'msg': str(e)}, 400
+
+
+
