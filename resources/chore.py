@@ -27,3 +27,15 @@ class Chore(Resource):
             return {'msg': 'Chore deleted'}, 200
         except Exception as e:
             return {'msg': str(e)}, 400
+
+class ChorePrison(Resource):
+    @jwt_required()
+    def get(self, pno):
+        sql = "SELECT * FROM chore WHERE prison_no = %s"
+        tuple = (pno)
+        res = execute_sql_tuple(sql=sql, tuple=tuple)
+
+        if res == "[]":
+            return {'msg': 'Chores do not exist'}, 400
+        else:
+            return {'Chore {}'.format(pno): res}, 200

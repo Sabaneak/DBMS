@@ -12,7 +12,7 @@ class Prisoner(Resource):
         try:
             #Prisoner table
             sql_1 = "INSERT INTO prisoner (pid, password, first_name, last_name, age, ht_in_m, wt_in_kg, eye_colour, " \
-                  "hair_colour, fingerprint, visits_made, prison_no, employed_by, entry_date) VALUES (%s %s %s %s %s %s %s %s %s %s %s %s %s %s)"
+                  "hair_colour, fingerprint, visits_made, prison_no, employed_by, entry_date) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
             tuple_1 = (
             pid, body['password'], body['first_name'], body['last_name'], body['age'], body['ht_in_m'], body['wt_in_kg'], body['eye_colour'],
             body['hair_colour'], body['fingerprint'], body['visits_made'], body['prison_no'], body['employed_by'], body['entry_date'])

@@ -101,6 +101,16 @@ class BusinessSheet(Resource):
             return {'Business {}'.format(bid): res}, 200
 
 
+class BusinessAll(Resource):
+    @jwt_required()
+    def get(self):
+        sql = "SELECT bid, bname, role, role_desc, sal, number_required, count(pid) AS number_employed FROM business, prisoner GROUP BY employed_by, bid, bname, role, role_desc, sal, number_required HAVING employed_by = bid"
+        res = execute_sql(sql=sql)
+        if res == "[]":
+            return {'msg': 'Business does not exist'}, 400
+        else:
+            return {'Business {}'.format(100): res}, 200
+
 class VisitSheet(Resource):
     @jwt_required()
     def get(self, prison_no):
