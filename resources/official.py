@@ -31,7 +31,7 @@ class Official(Resource):
 
 class Wardens(Resource):
     @jwt_required()
-    def get(self):
+    def get(self, _id):
         sql = "SELECT empid, first_name, last_name, prison_no FROM official WHERE type = 'Warden'"
         res = execute_sql(sql=sql)
 
@@ -42,7 +42,7 @@ class Wardens(Resource):
 
 class Guards(Resource):
     @jwt_required()
-    def get(self):
+    def get(self, _id):
         sql = "SELECT empid, first_name, last_name, prison_no FROM official WHERE type = 'Guard'"
         res = execute_sql(sql=sql)
 

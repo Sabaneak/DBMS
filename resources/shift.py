@@ -6,14 +6,14 @@ from .helper import execute_sql, execute_sql_tuple
 class ShiftAssignment(Resource):
     @jwt_required()
     def get(self, _id):
-        sql = "SELECT * FROM guard_shifts s, official o WHERE s.empid = o.empid AND o.prison_no = %s"
+        sql = "SELECT s.empid, s.shift_number FROM guard_shifts s, official o1, official o2 WHERE s.empid = o1.empid AND o1.mgr = o2.empid AND o2.empid = %s"
         tuple = (_id)
         res = execute_sql_tuple(sql=sql, tuple=tuple)
 
         if res == "[]":
             return {'msg': 'Prison does not exist'}, 400
         else:
-            return {'Prison {}'.format(_id): res}, 200
+            return {'GuardShift {}'.format(_id): res}, 200
 
     @jwt_required()
     def post(self, _id):

@@ -74,6 +74,17 @@ class ChiefWardenReport(Resource):
         else:
             return {'Chief Warden {}'.format(_id): res}, 200
 
+class AdminReport(Resource):
+    @jwt_required()
+    def get(self, _id):
+        sql = "SELECT o.empid, o.first_name, o.last_name, o.salary, o.years_of_experience, count(o1.empid) as employees FROM official o LEFT JOIN official o1 on o1.mgr = o.empid WHERE o.type = 'Admin' AND o.empid = %s"
+        tuple = (_id)
+        res = execute_sql_tuple(sql=sql, tuple=tuple)
+        if res == "[]":
+            return {'msg': 'Admin does not exist'}, 400
+        else:
+            return {'Admin {}'.format(_id): res}, 200
+
 
 class RelativeSheet(Resource):
     @jwt_required()
@@ -183,6 +194,17 @@ class WardenChiefWarden(Resource):
             return {'msg': 'Wardens not found'}, 400
         else:
             return {'Chief Warden {}'.format(empid): res}, 200
+
+class ChiefWardenAdmin(Resource):
+    @jwt_required()
+    def get(self, empid):
+        sql = "SELECT o.empid, o.first_name, o.last_name FROM official o WHERE o.type='Chief Warden' and o.mgr = %s"
+        tuple = (empid)
+        res = execute_sql_tuple(sql=sql, tuple=tuple)
+        if res == "[]":
+            return {'msg': 'Chief Wardens not found'}, 400
+        else:
+            return {'Admin {}'.format(empid): res}, 200
 
 class BusinessRequirement(Resource):
     @jwt_required()

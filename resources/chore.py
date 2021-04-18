@@ -39,3 +39,15 @@ class ChorePrison(Resource):
             return {'msg': 'Chores do not exist'}, 400
         else:
             return {'Chore {}'.format(pno): res}, 200
+    
+    @jwt_required()
+    def post(self, pno):
+        body = request.get_json()
+        sql = "INSERT INTO chore (prison_no, chore_name, people_needed, chore_time) VALUES (%s, %s, %s, %s)"
+        tuple = (pno, body['chore_name'], body['people_needed'], body['chore_time'])
+
+        try:
+            res = execute_sql_tuple(sql=sql, tuple=tuple)
+            return {'msg': 'Chore added'}, 200
+        except Exception as e:
+            return {'msg': str(e)}, 400
