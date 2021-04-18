@@ -38,3 +38,14 @@ class Prison(Resource):
             return {'msg': 'Prison deleted'}, 200
         except Exception as e:
             return {'msg': str(e)}, 400
+
+class Prisons_All(Resource):
+    @jwt_required()
+    def get(self):
+        sql = "SELECT pr.pno, pr.capacity, pr.district, pr.city, count(p.pid) AS prisoner_count FROM prisoner p, prison pr GROUP BY p.prison_no, pr.pno, pr.capacity, pr.district, pr.city HAVING p.prison_no = pr.pno"
+        res = execute_sql_tuple(sql=sql)
+
+        if res == "[]":
+            return {'msg': 'Prison does not exist'}, 400
+        else:
+            return {'Prisons': res}, 200

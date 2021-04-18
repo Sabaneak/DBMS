@@ -18,7 +18,7 @@ from resources.facility import Facility
 from resources.relative import Relative
 from resources.visit import Visit
 from resources.business import Business
-from resources.prison import Prison
+from resources.prison import Prison, Prisons_All
 from resources.prisoner import Prisoner, Prisoners, Prisoner_ID, Prisoner_Affiliations, AddPrisonerComponents
 from resources.crime import Crime, Crime_Records
 from resources.official import Official, Wardens, Guards
@@ -60,6 +60,7 @@ api.add_resource(Relative, '/relative/<int:pid>')
 api.add_resource(Visit, '/visit')
 
 api.add_resource(Prison, '/prison/<int:pno>')
+api.add_resource(Prisons_All, '/prison/all')
 api.add_resource(Business, '/business/<int:bus_id>')
 
 api.add_resource(Prisoner, '/prisoner/<int:pid>')
