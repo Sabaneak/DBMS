@@ -16,7 +16,7 @@ from resources.reports import (
 from resources.chore import Chore, ChorePrison
 from resources.shift import ShiftAssignment
 from resources.facility import Facility
-from resources.relative import Relative
+from resources.relative import Relative, RelativePrison
 from resources.visit import Visit
 from resources.business import Business
 from resources.prison import Prison, Prisons_All
@@ -60,6 +60,7 @@ api.add_resource(ChorePrison, '/chore_prison/<int:pno>')
 api.add_resource(ShiftAssignment, '/shift/<int:_id>')
 api.add_resource(Facility, '/facility/<int:pno>')
 api.add_resource(Relative, '/relative/<int:pid>')
+api.add_resource(RelativePrison, '/relative_prison/<int:pno>')
 api.add_resource(Visit, '/visit')
 
 api.add_resource(Prison, '/prison/<int:pno>')

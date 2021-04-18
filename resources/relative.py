@@ -38,3 +38,15 @@ class Relative(Resource):
             return {'msg': 'Relative deleted'}, 200
         except Exception as e:
             return {'msg': str(e)}, 400
+
+class RelativePrison(Resource):
+    @jwt_required()
+    def get(self, pno):
+        sql = "SELECT r.rid, r.first_name, r.last_name, r.pid FROM relative r, prisoner p WHERE r.pid = p.pid AND p.prison_no = %s"
+        tuple = (pno)
+        res = execute_sql_tuple(sql=sql, tuple=tuple)
+
+        if res == "[]":
+            return {'msg': 'Relative does not exist'}, 400
+        else:
+            return {'Prison {}'.format(pno): res}, 200
