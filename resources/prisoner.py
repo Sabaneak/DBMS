@@ -43,12 +43,29 @@ class Prisoner(Resource):
 
     @jwt_required()
     def delete(self, pid):
-        sql = "DELETE FROM prisoner WHERE pid = %s"
-        tuple = (pid)
 
         try:
-            res = execute_sql_tuple(sql=sql, tuple=tuple)
+            #Prisoner_ID
+            sql_1 = "DELETE FROM prisoner_id_marks WHERE pid = %s"
+            tuple_1 = (pid)
+            res = execute_sql_tuple(sql=sql_1, tuple=tuple_1)
+
+            #Prisoner_Affiliations
+            sql_2 = "DELETE FROM prisoner_affiliations WHERE pid = %s"
+            tuple_2 = (pid)
+            res = execute_sql_tuple(sql=sql_2, tuple=tuple_2)
+
+            #Prisoner_Crimes
+            sql_3 = "DELETE FROM crime_records WHERE pid = %s"
+            tuple_3 = (pid)
+            res = execute_sql_tuple(sql=sql_3, tuple=tuple_3)
+
+            sql_4 = "DELETE FROM prisoner WHERE pid = %s"
+            tuple_4 = (pid)
+            res = execute_sql_tuple(sql=sql_4, tuple=tuple_4)
+
             return {'msg': 'Prisoner deleted'}, 200
+
         except Exception as e:
             return {'msg': str(e)}, 400
 
