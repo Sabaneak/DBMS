@@ -10,7 +10,7 @@ class Visit(Resource):
     def post(self):
         body = request.get_json()
 
-        temp_sql = "SELECT appointment_date FROM visit, relative, prisoner WHERE visit.rid = relative.rid AND relative.pid = prisoner.pid AND relative.rid = %s ORDER BY appointment_date LIMIT 1"
+        temp_sql = "SELECT appointment_date FROM visit, relative, prisoner WHERE visit.rid = relative.rid AND relative.pid = prisoner.pid AND relative.rid = %s ORDER BY appointment_date desc LIMIT 1"
         temp_tuple = body['rid']
         temp = execute_sql_tuple(sql=temp_sql, tuple=temp_tuple)
 
