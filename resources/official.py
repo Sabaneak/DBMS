@@ -28,3 +28,25 @@ class Official(Resource):
             return {'msg': 'Official deleted'}, 200
         except Exception as e:
             return {'msg': str(e)}, 400
+
+class Wardens(Resource):
+    @jwt_required()
+    def get(self):
+        sql = "SELECT empid, first_name, last_name, prison_no FROM official WHERE type = 'Warden'"
+        res = execute_sql(sql=sql)
+
+        if res == "[]":
+            return {'msg': 'No wardens'}, 400
+        else:
+            return {'Wardens': res}, 200
+
+class Guards(Resource):
+    @jwt_required()
+    def get(self):
+        sql = "SELECT empid, first_name, last_name, prison_no FROM official WHERE type = 'Guard'"
+        res = execute_sql(sql=sql)
+
+        if res == "[]":
+            return {'msg': 'No guards'}, 400
+        else:
+            return {'Guards': res}, 200
