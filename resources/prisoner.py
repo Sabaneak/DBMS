@@ -67,8 +67,8 @@ class Prisoner(Resource):
 
 class Prisoners(Resource):
     @jwt_required()
-    def get(self):
-        sql = "SELECT p.pid, p.first_name, p.last_name, c.c_name FROM prisoner p, crime c, crime_records cr WHERE p.pid = cr.pid AND cr.cid = c.cid"
+    def get(self, _id):
+        sql = "SELECT p.pid, p.first_name, p.last_name, c.c_name FROM prisoner p, crime c, crime_records cr WHERE p.pid = cr.pid AND cr.cid = c.cid ORDER BY p.pid"
         res = execute_sql(sql=sql)
 
         if res == "[]":
