@@ -24,8 +24,6 @@ from resources.prisoner import Prisoner, Prisoners, AddPrisonerComponents
 from resources.crime import Crime, Crime_Records
 from resources.official import Official, Wardens, Guards
 
-#from resources.upload import Upload
-
 basedir = os.path.abspath(os.path.dirname(__file__))
 
 app = Flask(__name__)
@@ -83,7 +81,6 @@ api.add_resource(Official, '/official/<int:empid>')
 api.add_resource(Wardens, '/official/wardens/<int:_id>')
 api.add_resource(Guards, '/official/guards/<int:_id>')
 
-# api.add_resource(Upload, '/upload/<int:tid>')
 
 if __name__ == '__main__':
     app.run(debug=True)

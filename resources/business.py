@@ -32,11 +32,14 @@ class Business(Resource):
 
     @jwt_required()
     def delete(self, bus_id):
-        sql = "DELETE FROM business WHERE bid = %s"
-        tuple = (bus_id)
-
         try:
-            res = execute_sql_tuple(sql=sql, tuple=tuple)
+            sql_1 = "UPDATE prisoners SET employed_by=NULL where employed_by=%s"
+            tuple_1 = bus_id
+            res_1 = execute_sql_tuple(sql_1, tuple_1)
+
+            sql_2 = "DELETE FROM business WHERE bid = %s"
+            tuple_2 = (bus_id)
+            res_2 = execute_sql_tuple(sql_2, tuple_2)
             return {'msg': 'Business deleted'}, 200
 
         except Exception as e:
