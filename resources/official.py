@@ -20,12 +20,17 @@ class Official(Resource):
 
     @jwt_required()
     def delete(self, empid):
-        sql = "DELETE FROM official WHERE empid = %s"
-        tuple = (empid)
-
         try:
-            res = execute_sql_tuple(sql=sql, tuple=tuple)
+            sql_1 = "UPDATE official SET mgr=NULL WHERE mgr=%s"
+            tuple_1 = empid
+            res_1 = execute_sql_tuple(sql_1, tuple_1)
+
+            sql_2 = "DELETE FROM official WHERE empid = %s"
+            tuple_2 = (empid)
+            res_2 = execute_sql_tuple(sql_2, tuple_2)
+
             return {'msg': 'Official deleted'}, 200
+
         except Exception as e:
             return {'msg': str(e)}, 400
 
@@ -58,6 +63,6 @@ class ChiefWardens(Resource):
         res = execute_sql(sql=sql)
 
         if res == "[]":
-            return {'msg': 'No guards'}, 400
+            return {'msg': 'No chief wardens'}, 400
         else:
             return {'Chief Wardens': res}, 200
