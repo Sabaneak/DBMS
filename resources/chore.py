@@ -54,20 +54,19 @@ class ChorePrison(Resource):
 
     @jwt_required()
     def delete(self, pno):
-        try:
-            body = request.get_json()
-            sql_1 = "DELETE FROM prisoner_chores WHERE pno=%s AND chore_name=%s"
-            tuple_1 = (pno, body['chore_name'])
-            res_1 = execute_sql_tuple(sql_1, tuple_1)
+        
+        body = request.get_json()
+        sql_1 = "DELETE FROM prisoner_chores WHERE prison_no=%s AND chore_name=%s"
+        tuple_1 = (pno, body['chore_name'])
+        res_1 = execute_sql_tuple(sql_1, tuple_1)
 
-            sql_2 = "DELETE FROM chore WHERE pno=%s AND chore_name=%s"
-            tuple_2 = (pno, body['chore_name'])
-            res_2 = execute_sql_tuple(sql_2, tuple_2)
+        sql_2 = "DELETE FROM chore WHERE prison_no=%s AND chore_name=%s"
+        tuple_2 = (pno, body['chore_name'])
+        res_2 = execute_sql_tuple(sql_2, tuple_2)
 
-            return {'msg': 'Chore deleted'}, 200
+        return {'msg': 'Chore deleted'}, 200
 
-        except Exception as e:
-            return {'msg': str(e)}, 400
+        
             
 class ChorePrisoner(Resource):
     @jwt_required()

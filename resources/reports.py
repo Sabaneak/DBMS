@@ -125,7 +125,7 @@ class BusinessAll(Resource):
 class VisitSheet(Resource):
     @jwt_required()
     def get(self, prison_no):
-        sql = "SELECT v.vid, v.rid, r.pid, r.first_name, r.last_name, r.relation FROM visit v, relative r, prisoner p WHERE v.rid = r.rid AND r.pid = p.pid AND p.prison_no = %s"
+        sql = "SELECT v.vid, v.rid, v.appointment_date, r.pid, r.first_name, r.last_name, r.relation FROM visit v, relative r, prisoner p WHERE v.rid = r.rid AND r.pid = p.pid AND p.prison_no = %s"
         tuple = (prison_no)
         res = execute_sql_tuple(sql=sql, tuple=tuple)
 

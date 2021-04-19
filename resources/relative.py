@@ -30,8 +30,8 @@ class Relative(Resource):
     @jwt_required()
     def delete(self, pid):
         body = request.get_json()
-        sql = "DELETE FROM relative WHERE rid = %s and pid = %s"
-        tuple = (body['rid'], pid)
+        sql = "DELETE FROM relative WHERE rid = %s"
+        tuple = (pid)
 
         try:
             res = execute_sql_tuple(sql=sql, tuple=tuple)
