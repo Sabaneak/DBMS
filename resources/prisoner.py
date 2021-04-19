@@ -117,3 +117,17 @@ class AddPrisonerComponents(Resource):
             return {'Prison {}'.format(pno): res}, 200
         except Exception as e:
             return {'msg': str(e)}, 400
+
+class GetPrisonerPrison(Resource):
+    @jwt_required()
+    def get(self, _id):
+        sql = "SELECT p.pid, p.prison_no from prisoner p order by p.pid"
+        sql1 = "SELECT pno from prison order by pno"
+        res = execute_sql(sql=sql)
+        res1 = execute_sql(sql=sql1)
+        if res == "[]":
+            return {'msg': 'No prisoners'}, 400
+        if res1 == "[]":
+            return {'msg': 'No prisons'}, 400
+        else:
+            return {'Prisoners': res, 'Prisons': res1}, 200

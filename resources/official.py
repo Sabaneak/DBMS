@@ -50,3 +50,14 @@ class Guards(Resource):
             return {'msg': 'No guards'}, 400
         else:
             return {'Guards': res}, 200
+
+class ChiefWardens(Resource):
+    @jwt_required()
+    def get(self, _id):
+        sql = "SELECT empid, prison_no FROM official WHERE type = 'Chief Warden'"
+        res = execute_sql(sql=sql)
+
+        if res == "[]":
+            return {'msg': 'No guards'}, 400
+        else:
+            return {'Chief Wardens': res}, 200

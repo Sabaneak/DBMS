@@ -41,11 +41,12 @@ class Prison(Resource):
 
 class Prisons_All(Resource):
     @jwt_required()
-    def get(self):
-        sql = "SELECT pr.pno, pr.capacity, pr.district, pr.city, count(p.pid) AS prisoner_count FROM prisoner p, prison pr GROUP BY p.prison_no, pr.pno, pr.capacity, pr.district, pr.city HAVING p.prison_no = pr.pno"
-        res = execute_sql_tuple(sql=sql)
-
+    def get(self, _id):
+        sql = "SELECT pr.pno, pr.capacity, pr.district, pr.city, count(p.pid) AS prisoner_count FROM prison pr LEFT JOIN prisoner p on p.prison_no = pr.pno GROUP BY p.prison_no, pr.pno, pr.capacity, pr.district, pr.city"
+        sql1 = "SELECT * FROM prisond5, prisond6"
+        res = execute_sql(sql=sql)
+        res1 = execute_sql(sql=sql1)
         if res == "[]":
             return {'msg': 'Prison does not exist'}, 400
         else:
-            return {'Prisons': res}, 200
+            return {'Prisons': res, 'Total': res1}, 200
