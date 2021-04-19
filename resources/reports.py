@@ -54,7 +54,7 @@ class PrisonReport(Resource):
 class ChoreSheet(Resource):
     @jwt_required()
     def get(self, pno):
-        sql = "SELECT c.pid, c.chore_name, c1.chore_time FROM prisoner_chores c, chore c1 WHERE c.prison_no = c1.prison_no AND c.chore_name = c1.chore_name AND prison_no = %s"
+        sql = "SELECT c.pid, c.chore_name, c1.chore_time FROM prisoner_chores c, chore c1 WHERE c.prison_no = c1.prison_no AND c.chore_name = c1.chore_name AND c.prison_no = %s"
         tuple = (pno)
         res = execute_sql_tuple(sql=sql, tuple=tuple)
 
@@ -115,7 +115,7 @@ class BusinessSheet(Resource):
 class BusinessAll(Resource):
     @jwt_required()
     def get(self):
-        sql = "SELECT bid, bname, role, role_desc, sal, number_required, count(pid) AS number_employed FROM business, prisoner GROUP BY employed_by, bid, bname, role, role_desc, sal, number_required HAVING employed_by = bid"
+        sql = "SELECT bid, bname FROM business"
         res = execute_sql(sql=sql)
         if res == "[]":
             return {'msg': 'Business does not exist'}, 400

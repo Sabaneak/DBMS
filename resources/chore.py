@@ -51,3 +51,15 @@ class ChorePrison(Resource):
             return {'msg': 'Chore added'}, 200
         except Exception as e:
             return {'msg': str(e)}, 400
+
+class ChorePrisoner(Resource):
+    @jwt_required()
+    def get(self, pno):
+        sql = "SELECT p.pid, c.chore_name FROM prisoner p, chore c WHERE p.prison_no = c.prison_no AND p.prison_no = %s"
+        tuple = (pno)
+        res = execute_sql_tuple(sql=sql, tuple=tuple)
+
+        if res == "[]":
+            return {'msg': 'Chores do not exist'}, 400
+        else:
+            return {'Prison {}'.format(pno): res}, 200

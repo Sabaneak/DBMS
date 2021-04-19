@@ -13,7 +13,7 @@ from resources.reports import (
     GuardWarden, GuardChiefWarden, WardenChiefWarden, ChiefWardenAdmin, BusinessAll
 )
 
-from resources.chore import Chore, ChorePrison
+from resources.chore import Chore, ChorePrison, ChorePrisoner
 from resources.shift import ShiftAssignment
 from resources.facility import Facility
 from resources.relative import Relative, RelativePrison
@@ -24,7 +24,7 @@ from resources.prisoner import Prisoner, Prisoners, AddPrisonerComponents
 from resources.crime import Crime, Crime_Records
 from resources.official import Official, Wardens, Guards
 
-from resources.upload import Upload
+#from resources.upload import Upload
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 
@@ -61,6 +61,7 @@ api.add_resource(UpdateRequirement, '/update_business_requirement/<int:bid>')
 
 api.add_resource(Chore, '/chore')
 api.add_resource(ChorePrison, '/chore_prison/<int:pno>')
+api.add_resource(ChorePrisoner, '/chore_prisoner/<int:pno>')
 api.add_resource(ShiftAssignment, '/shift/<int:_id>')
 api.add_resource(Facility, '/facility/<int:pno>')
 api.add_resource(Relative, '/relative/<int:pid>')

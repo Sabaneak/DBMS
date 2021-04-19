@@ -51,7 +51,11 @@ class Prisoner(Resource):
             res = execute_sql_tuple(sql=sql_1, tuple=tuple_1)
 
             #Prisoner_Affiliations
-            sql_2 = "DELETE FROM prisoner_affiliations WHERE pid = %s"
+            sql_2 = "DELETE FROM prisoner_affiliations WHERE p_1 = %s"
+            tuple_2 = (pid)
+            res = execute_sql_tuple(sql=sql_2, tuple=tuple_2)
+
+            sql_2 = "DELETE FROM prisoner_affiliations WHERE p_2 = %s"
             tuple_2 = (pid)
             res = execute_sql_tuple(sql=sql_2, tuple=tuple_2)
 
@@ -59,6 +63,14 @@ class Prisoner(Resource):
             sql_3 = "DELETE FROM crime_records WHERE pid = %s"
             tuple_3 = (pid)
             res = execute_sql_tuple(sql=sql_3, tuple=tuple_3)
+
+            sql_5 = "DELETE FROM prisoner_chores WHERE pid = %s"
+            tuple_5 = (pid)
+            res = execute_sql_tuple(sql=sql_5, tuple=tuple_5)
+
+            sql_6 = "DELETE FROM relative WHERE pid = %s"
+            tuple_6 = (pid)
+            res = execute_sql_tuple(sql=sql_6, tuple=tuple_6)
 
             sql_4 = "DELETE FROM prisoner WHERE pid = %s"
             tuple_4 = (pid)
