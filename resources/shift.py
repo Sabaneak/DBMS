@@ -29,8 +29,8 @@ class ShiftAssignment(Resource):
 
     @jwt_required()
     def delete(self, _id):
-        sql = "DELETE FROM guard_shifts WHERE empid = % s"
-        tuple = (_id)
+        sql = "DELETE FROM guard_shifts WHERE empid = %s and shift_number = %s"
+        tuple = (_id, body['shift_number'])
 
         try:
             res = execute_sql_tuple(sql=sql, tuple=tuple)

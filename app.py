@@ -20,9 +20,9 @@ from resources.relative import Relative, RelativePrison
 from resources.visit import Visit
 from resources.business import Business, EmpBidComb, updateBusID
 from resources.prison import Prison, Prisons_All
-from resources.prisoner import Prisoner, Prisoners, AddPrisonerComponents
+from resources.prisoner import Prisoner, Prisoners, AddPrisonerComponents, GetPrisonerPrison
 from resources.crime import Crime, Crime_Records
-from resources.official import Official, Wardens, Guards
+from resources.official import Official, Wardens, Guards, ChiefWardens
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 
@@ -67,7 +67,7 @@ api.add_resource(RelativePrison, '/relative_prison/<int:pno>')
 api.add_resource(Visit, '/visit')
 
 api.add_resource(Prison, '/prison/<int:pno>')
-api.add_resource(Prisons_All, '/prison/all')
+api.add_resource(Prisons_All, '/prison/all/<int:_id>')
 api.add_resource(Business, '/business/<int:bus_id>')
 api.add_resource(EmpBidComb, '/emp_bid_comb/<int:pno>')
 api.add_resource(updateBusID, '/update_bus_id')
@@ -75,6 +75,7 @@ api.add_resource(updateBusID, '/update_bus_id')
 api.add_resource(Prisoner, '/prisoner/<int:pid>')
 api.add_resource(Prisoners, '/prisoners/all/<int:_id>')
 api.add_resource(AddPrisonerComponents, '/prisoner_form_details/<int:pno>')
+api.add_resource(GetPrisonerPrison, '/prisonerprison/<int:_id>')
 
 api.add_resource(Crime, '/crime/<int:cid>')
 api.add_resource(Crime_Records, '/crime_records/<int:pid>')
@@ -82,6 +83,8 @@ api.add_resource(Crime_Records, '/crime_records/<int:pid>')
 api.add_resource(Official, '/official/<int:empid>')
 api.add_resource(Wardens, '/official/wardens/<int:_id>')
 api.add_resource(Guards, '/official/guards/<int:_id>')
+
+api.add_resource(ChiefWardens, '/official/chiefwardens/<int:_id>')
 
 
 if __name__ == '__main__':
