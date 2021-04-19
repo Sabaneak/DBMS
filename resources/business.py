@@ -67,4 +67,4 @@ class updateBusID(Resource):
             res = execute_sql_tuple(sql=sql, tuple=tuple)
             return {'msg': 'Update Done!'}, 200
         except Exception as e:
-            return {'msg': str(e)}, 400
+            return {'msg': str(e)}, 400 
