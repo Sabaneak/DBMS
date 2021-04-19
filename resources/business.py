@@ -45,3 +45,26 @@ class Business(Resource):
         except Exception as e:
             return {'msg': str(e)}, 400
 
+class EmpBidComb(Resource):
+    @jwt_required()
+    def get(self,pno):
+        sql="select employed_by,bid from prisoner,business where pid=%s"
+        tuple = (pno)
+        res = execute_sql_tuple(sql=sql, tuple=tuple)
+
+        if res == "[]":
+            return {'msg': 'Combination Not Found'}, 400
+        else:
+            return {'Combination {}'.format(pno): res}, 200
+
+class updateBusID(Resource):
+    @jwt_required()
+    def put(self):
+        body = request.get_json()
+        sql="update prisoner set employed_by=%s where pid=%s"
+        tuple=(body['bid'],body['pid'])
+        try:
+            res = execute_sql_tuple(sql=sql, tuple=tuple)
+            return {'msg': 'Update Done!'}, 200
+        except Exception as e:
+            return {'msg': str(e)}, 400

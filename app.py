@@ -18,7 +18,7 @@ from resources.shift import ShiftAssignment
 from resources.facility import Facility
 from resources.relative import Relative, RelativePrison
 from resources.visit import Visit
-from resources.business import Business
+from resources.business import Business, EmpBidComb, updateBusID
 from resources.prison import Prison, Prisons_All
 from resources.prisoner import Prisoner, Prisoners, AddPrisonerComponents
 from resources.crime import Crime, Crime_Records
@@ -69,6 +69,8 @@ api.add_resource(Visit, '/visit')
 api.add_resource(Prison, '/prison/<int:pno>')
 api.add_resource(Prisons_All, '/prison/all')
 api.add_resource(Business, '/business/<int:bus_id>')
+api.add_resource(EmpBidComb, '/emp_bid_comb/<int:pno>')
+api.add_resource(updateBusID, '/update_bus_id')
 
 api.add_resource(Prisoner, '/prisoner/<int:pid>')
 api.add_resource(Prisoners, '/prisoners/all/<int:_id>')
