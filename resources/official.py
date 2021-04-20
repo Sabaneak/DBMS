@@ -25,6 +25,10 @@ class Official(Resource):
             tuple_1 = empid
             res_1 = execute_sql_tuple(sql_1, tuple_1)
 
+            sql_3 = "DELETE FROM guard_shifts WHERE empid=%s"
+            tuple_3 = empid
+            res_3 = execute_sql_tuple(sql_3, tuple_3)
+
             sql_2 = "DELETE FROM official WHERE empid = %s"
             tuple_2 = (empid)
             res_2 = execute_sql_tuple(sql_2, tuple_2)
@@ -66,3 +70,27 @@ class ChiefWardens(Resource):
             return {'msg': 'No chief wardens'}, 400
         else:
             return {'Chief Wardens': res}, 200
+
+class GuardWardenComb(Resource):
+    @jwt_required()
+    def get(self,empid):
+        sql="select G.mgr,M.empid as cempid from official G,official M where G.empid=%s and M.type='Warden'"
+        tuple = (empid)
+        res = execute_sql_tuple(sql=sql, tuple=tuple)
+
+        if res == "[]":
+            return {'msg': 'Combination Not Found'}, 400
+        else:
+            return {'Combination {}'.format(empid): res}, 200
+
+class updateMgrID(Resource):
+    @jwt_required()
+    def put(self):
+        body = request.get_json()
+        sql="update official set mgr=%s where empid=%s"
+        tuple=(body['cempid'],body['empid'])
+        try:
+            res = execute_sql_tuple(sql=sql, tuple=tuple)
+            return {'msg': 'Update Done!'}, 200
+        except Exception as e:
+            return {'msg': str(e)}, 400
