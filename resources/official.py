@@ -21,7 +21,7 @@ class Official(Resource):
     @jwt_required()
     def delete(self, empid):
         try:
-            sql_1 = "UPDATE official SET mgr=NULL WHERE mgr=%s"
+            sql_1 = "UPDATE official SET mgr=200001 WHERE mgr=%s"
             tuple_1 = empid
             res_1 = execute_sql_tuple(sql_1, tuple_1)
 

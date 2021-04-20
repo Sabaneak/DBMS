@@ -23,17 +23,18 @@ class ShiftAssignment(Resource):
 
         try:
             res = execute_sql_tuple(sql=sql, tuple=tuple)
-            return {'msg': 'Chore added'}, 200
+            return {'msg': 'Shift added'}, 200
         except Exception as e:
             return {'msg': str(e)}, 400
 
+class ShiftDeletion(Resource):
     @jwt_required()
-    def delete(self, _id):
+    def delete(self, _id, shiftnumber):
         sql = "DELETE FROM guard_shifts WHERE empid = %s and shift_number = %s"
-        tuple = (_id, body['shift_number'])
+        tuple = (_id, shiftnumber)
 
         try:
             res = execute_sql_tuple(sql=sql, tuple=tuple)
-            return {'msg': 'Chore deleted'}, 200
+            return {'msg': 'Shift deleted'}, 200
         except Exception as e:
             return {'msg': str(e)}, 400
