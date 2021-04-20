@@ -7,7 +7,7 @@ from .helper import execute_sql, execute_sql_tuple
 class Prison(Resource):
     @jwt_required()
     def get(self, pno):
-        sql = "SELECT pr.pno, pr.capacity, pr.district, pr.city, count(p.pid) AS prisoner_count FROM prisoner p, prison pr GROUP BY p.prison_no, pr.pno, pr.capacity, pr.district, pr.city HAVING p.prison_no = pr.pno AND p.prison_no=%s"
+        sql = "SELECT * FROM prisond LEFT JOIN prisond1 USING (pno) LEFT JOIN prisond2 USING (pno) LEFT JOIN prisond3 USING (pno) LEFT JOIN prisond4 USING (pno) WHERE pno = %s"
         tuple = (pno)
         res = execute_sql_tuple(sql=sql, tuple=tuple)
 

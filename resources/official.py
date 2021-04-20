@@ -74,7 +74,7 @@ class ChiefWardens(Resource):
 class GuardWardenComb(Resource):
     @jwt_required()
     def get(self,empid):
-        sql="select G.mgr,M.empid as cempid from official G,official M where G.empid=%s and M.type='Warden'"
+        sql="select G.mgr,M.empid as cempid from official G,official M where G.empid=%s and M.type='Warden' and M.prison_no = G.prison_no"
         tuple = (empid)
         res = execute_sql_tuple(sql=sql, tuple=tuple)
 
