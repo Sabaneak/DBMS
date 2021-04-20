@@ -89,7 +89,7 @@ class AdminReport(Resource):
 class RelativeSheet(Resource):
     @jwt_required()
     def get(self, rid):
-        sql = "SELECT r.rid, r.first_name, r.last_name, r.pid, r.relation, p.prison_no, v.appointment_date FROM relative r, visit v, prisoner p WHERE v.rid = r.rid AND r.pid = p.pid AND r.rid = %s"
+        sql = "SELECT r.rid, r.first_name, r.last_name, r.pid, r.relation, p.prison_no, v.appointment_date FROM relative r LEFT JOIN visit v on r.rid = v.rid, prisoner p WHERE r.pid = p.pid AND r.rid = %s"
         tuple = (rid)
         res = execute_sql_tuple(sql=sql, tuple=tuple)
 
@@ -102,7 +102,7 @@ class RelativeSheet(Resource):
 class BusinessSheet(Resource):
     @jwt_required()
     def get(self, bid):
-        sql = "SELECT bid, bname, role, role_desc, sal, number_required, count(pid) AS number_employed FROM business, prisoner GROUP BY employed_by, bid, bname, role, role_desc, sal, number_required HAVING employed_by = bid AND bid = %s"
+        sql = "SELECT bid, bname, role, role_desc, sal, number_required, count(pid) AS number_employed FROM business LEFT JOIN prisoner ON employed_by = bid WHERE bid = %s GROUP BY employed_by, bid, bname, role, role_desc, sal, number_required;"
         tuple = (bid)
         res = execute_sql_tuple(sql=sql, tuple=tuple)
 
