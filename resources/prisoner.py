@@ -85,11 +85,11 @@ class Prisoner(Resource):
     def put(self, pid):
         body = request.get_json()
         sql = "UPDATE prisoner SET prison_no = %s WHERE pid = %s"
-        tuple = (body['pno'], pid)
+        tuple = (body['prison_no'], pid)
 
         try:
             res = execute_sql_tuple(sql=sql, tuple=tuple)
-            return {'msg': 'Prisoner {} shifted to prison {}'.format(pid, body['pno'])}, 200
+            return {'msg': 'Prisoner {} shifted to prison {}'.format(pid, body['prison_no'])}, 200
         except Exception as e:
             return {'msg': str(e)}, 400
 
