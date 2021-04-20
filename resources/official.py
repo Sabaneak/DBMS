@@ -83,7 +83,7 @@ class GuardWardenComb(Resource):
         else:
             return {'Combination {}'.format(empid): res}, 200
 
-class updateMgrID(Resource):
+class UpdateMgrID(Resource):
     @jwt_required()
     def put(self):
         body = request.get_json()

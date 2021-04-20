@@ -22,7 +22,7 @@ from resources.business import Business, EmpBidComb, updateBusID
 from resources.prison import Prison, Prisons_All
 from resources.prisoner import Prisoner, Prisoners, AddPrisonerComponents, GetPrisonerPrison
 from resources.crime import Crime, Crime_Records
-from resources.official import Official, Wardens, Guards, ChiefWardens, GuardWardenComb, updateMgrID
+from resources.official import Official, Wardens, Guards, ChiefWardens, GuardWardenComb, UpdateMgrID
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 
@@ -73,7 +73,7 @@ api.add_resource(Business, '/business/<int:bus_id>')
 api.add_resource(EmpBidComb, '/emp_bid_comb/<int:pno>')
 api.add_resource(updateBusID, '/update_bus_id')
 api.add_resource(GuardWardenComb, '/guard_warden_comb/<int:empid>')
-api.add_resource(updateMgrID, '/update_mgr_id')
+api.add_resource(UpdateMgrID, '/update_mgr_id')
 
 api.add_resource(Prisoner, '/prisoner/<int:pid>')
 api.add_resource(Prisoners, '/prisoners/all/<int:_id>')
